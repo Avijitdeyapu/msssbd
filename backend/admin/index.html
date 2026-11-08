@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>অ্যাডমিন প্যানেল – এম. সুমন স্মৃতি সংঘ</title>
+<style>
+:root{--bg:#f4f6f3;--surf:#fff;--ink:#14231f;--mute:#5b6b66;--line:#e2e7e3;--brand:#0f6b5c;--brand2:#0a4a40;--red:#d93a3a;--soft:#e6f2ee}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1614;--surf:#16211e;--ink:#eaf2ef;--mute:#9db0aa;--line:#26352f;--brand:#3fb8a1;--brand2:#0a4a40;--red:#ff6b6b;--soft:#16302a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Bengali","Hind Siliguri",sans-serif;line-height:1.55}
+.top{background:var(--brand2);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.top b{font-size:18px}.top span{opacity:.85;font-size:14px;margin-left:auto}
+.tabs{display:flex;gap:4px;overflow-x:auto;background:var(--surf);border-bottom:1px solid var(--line);padding:8px 14px}
+.tabs button{font:inherit;font-weight:600;border:0;background:none;color:var(--mute);padding:9px 14px;border-radius:8px;cursor:pointer;white-space:nowrap}
+.tabs button.on{background:var(--soft);color:var(--brand)}
+main{max-width:980px;margin:0 auto;padding:22px 16px 60px}
+h2{margin:0 0 14px}h3{margin:0 0 12px}
+.box,.item{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:18px}
+form.box{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:18px}
+form.box h3,.full,.fa{grid-column:1/-1}
+.fld label{display:block;font-size:13px;font-weight:600;margin-bottom:3px;color:var(--mute)}
+input,select,textarea{font:inherit;width:100%;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type=checkbox]{width:auto;transform:scale(1.3)}
+.btn{font:inherit;font-weight:600;font-size:14px;border:1px solid var(--line);background:var(--surf);color:var(--ink);padding:8px 16px;border-radius:9px;cursor:pointer}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.ok{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.warn{color:#b7791f;border-color:#b7791f}.btn.del{color:var(--red);border-color:var(--red)}
+.list{display:grid;gap:10px}
+.item{display:flex;gap:14px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+.body{flex:1;min-width:220px;overflow-wrap:anywhere}
+.kv b{color:var(--mute);font-weight:600}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.item .t{font-weight:700;font-size:17px}.item .s{color:var(--mute);font-size:14px}
+.bar2{display:flex;gap:10px;margin-bottom:14px;max-width:260px}
+.empty{color:var(--mute);text-align:center;padding:30px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:20px;cursor:pointer}
+.card b{display:block;font-size:34px;color:var(--brand)}.card span{color:var(--mute)}
+#login{max-width:380px;margin:12vh auto;padding:0 16px}
+#login form{display:grid;gap:12px}
+#err{color:var(--red);min-height:20px;font-size:14px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--brand2);color:#fff;padding:11px 20px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .2s}
+#toast.on{opacity:1}#toast.bad{background:var(--red)}
+.hide{display:none}
+@media(max-width:640px){form.box{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="login">
+<div class="box"><h2>অ্যাডমিন লগইন</h2>
+<form id="lf"><input id="em" type="email" placeholder="ইমেইল" required autocomplete="username">
+<input id="pw" type="password" placeholder="পাসওয়ার্ড" required autocomplete="current-password">
+<div id="err"></div><button class="btn pri" type="submit">লগইন</button></form></div>
+</div>
+
+<div id="app" class="hide">
+<div class="top"><b>এম. সুমন স্মৃতি সংঘ: অ্যাডমিন</b><span id="who"></span><button class="btn" id="out">লগআউট</button></div>
+<div class="tabs" id="tabs"></div>
+<main id="main"></main>
+</div>
+<div id="toast"></div>
+
+<script>
+var T=null,ME=null;
+function $(i){return document.getElementById(i)}
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function btn(l,c,f){var b=el("button","btn "+(c||""),l);b.type="button";b.onclick=f;return b}
+function toast(m,bad){var t=$("toast");t.textContent=m;t.className="on"+(bad?" bad":"");clearTimeout(toast.h);toast.h=setTimeout(function(){t.className=""},3200)}
+function act(fn){return fn().catch(function(e){toast(e.message||"ত্রুটি হয়েছে",1)})}
+
+async function api(path,o){
+  o=o||{};var h={},body;
+  if(T)h.Authorization="Bearer "+T;
+  if(o.json){h["Content-Type"]="application/json";body=JSON.stringify(o.json)}
+  if(o.form)body=o.form;
+  var r=await fetch("/api"+path,{method:o.method||"GET",headers:h,body:body});
+  if(r.status===401&&path!=="/auth/login"){logout();throw new Error("সেশন শেষ, আবার লগইন করুন")}
+  if(!r.ok){var m="ত্রুটি হয়েছে";try{var j=await r.json();m=typeof j.detail==="string"?j.detail:j.detail.map(function(x){return x.msg}).join("; ")}catch(e){}throw new Error(m)}
+  return r.status===204?null:r.json();
+}
+
+/* ---------- লগইন ---------- */
+$("lf").onsubmit=function(e){e.preventDefault();$("err").textContent="";
+  var f=new URLSearchParams();f.set("username",$("em").value);f.set("password",$("pw").value);
+  api("/auth/login",{method:"POST",form:f}).then(function(r){T=r.access_token;return api("/auth/me")}).then(function(m){ME=m;$("pw").value="";start()}).catch(function(er){$("err").textContent=er.message});
+};
+function logout(){T=null;ME=null;$("app").classList.add("hide");$("login").classList.remove("hide")}
+$("out").onclick=logout;
+
+/* ---------- ট্যাব ---------- */
+var TABS=[["dash","ড্যাশবোর্ড"],["donors","রক্তদাতা"],["volunteers","স্বেচ্ছাসেবক"],["tributes","শ্রদ্ধাঞ্জলি"],["messages","বার্তা"],["news","সংবাদ"],["committee","কমিটি"],["finance","আর্থিক",1],["users","ব্যবহারকারী",1]];
+function start(){
+  $("login").classList.add("hide");$("app").classList.remove("hide");
+  $("who").textContent=ME.name+" ("+(ME.role==="admin"?"অ্যাডমিন":"এডিটর")+")";
+  var tb=$("tabs");tb.textContent="";
+  TABS.forEach(function(t){if(t[2]&&ME.role!=="admin")return;var b=el("button",null,t[1]);b.dataset.k=t[0];b.onclick=function(){show(t[0])};tb.appendChild(b)});
+  show("dash");
+}
+function show(k){
+  Array.prototype.forEach.call($("tabs").children,function(b){b.classList.toggle("on",b.dataset.k===k)});
+  var m=$("main");m.textContent="";
+  act(async function(){
+    if(k==="dash")await dash();
+    else if(RV[k])await reviewView(k);
+    else if(k==="messages")await messagesView();
+    else await crudView(CRUD[k]);
+  });
+}
+
+/* ---------- ড্যাশবোর্ড ---------- */
+async function dash(){
+  var m=$("main");m.appendChild(el("h2",null,"অপেক্ষমাণ কাজ"));
+  var r=await Promise.all([api("/admin/review/donors?status=pending"),api("/admin/review/volunteers?status=pending"),api("/admin/review/tributes?status=pending"),api("/admin/messages")]);
+  var unread=r[3].filter(function(x){return !x.is_read}).length;
+  var g=el("div","cards");
+  [["নতুন রক্তদাতা",r[0].length,"donors"],["নতুন স্বেচ্ছাসেবক",r[1].length,"volunteers"],["নতুন শ্রদ্ধাঞ্জলি",r[2].length,"tributes"],["অপঠিত বার্তা",unread,"messages"]].forEach(function(c){
+    var d=el("div","card");d.appendChild(el("b",null,String(c[1])));d.appendChild(el("span",null,c[0]));d.onclick=function(){show(c[2])};g.appendChild(d)});
+  m.appendChild(g);
+}
+
+/* ---------- অনুমোদন তালিকা ---------- */
+var RV={
+  donors:{t:"রক্তদাতা",f:[["name","নাম"],["blood_group","গ্রুপ"],["area","এলাকা"],["phone","ফোন"],["last_donation","শেষ রক্তদান"]]},
+  volunteers:{t:"স্বেচ্ছাসেবক",f:[["name","নাম"],["phone","ফোন"],["email","ইমেইল"],["age","বয়স"],["address","ঠিকানা"],["interests","আগ্রহ"],["availability","সময়"],["about","পরিচয়"]]},
+  tributes:{t:"শ্রদ্ধাঞ্জলি",f:[["name","নাম"],["body","বার্তা"]]}
+};
+async function reviewView(kind){
+  var m=$("main");m.appendChild(el("h2",null,RV[kind].t));
+  var bar=el("div","bar2"),sel=el("select");
+  [["pending","অপেক্ষমাণ"],["approved","অনুমোদিত"],["rejected","বাতিল"]].forEach(function(o){var op=el("option",null,o[1]);op.value=o[0];sel.appendChild(op)});
+  bar.appendChild(sel);m.appendChild(bar);
+  var list=el("div","list");m.appendChild(list);
+  async function load(){
+    list.textContent="";
+    var rows=await api("/admin/review/"+kind+"?status="+sel.value);
+    if(!rows.length){list.appendChild(el("div","empty","কিছু নেই"));return}
+    rows.forEach(function(r){
+      var c=el("div","item"),b=el("div","body");
+      RV[kind].f.forEach(function(f){var v=r[f[0]];if(v==null||v==="")return;var p=el("div","kv");p.appendChild(el("b",null,f[1]+": "));p.appendChild(document.createTextNode(String(v)));b.appendChild(p)});
+      b.appendChild(el("div","s",(r.created_at||"").slice(0,10)));
+      var a=el("div","acts");
+      function set(s){return function(){act(async function(){await api("/admin/review/"+kind+"/"+r.id,{method:"PATCH",json:{status:s}});toast("হয়েছে");await load()})}}
+      if(r.status!=="approved")a.appendChild(btn("অনুমোদন","ok",set("approved")));
+      if(r.status!=="rejected")a.appendChild(btn("বাতিল","warn",set("rejected")));
+      a.appendChild(btn("মুছুন","del",function(){if(!confirm("মুছে ফেলবেন?"))return;act(async function(){await api("/admin/review/"+kind+"/"+r.id,{method:"DELETE"});await load()})}));
+      c.appendChild(b);c.appendChild(a);list.appendChild(c);
+    });
+  }
+  sel.onchange=function(){act(load)};
+  await load();
+}
+
+/* ---------- বার্তা ---------- */
+async function messagesView(){
+  var m=$("main");m.appendChild(el("h2",null,"যোগাযোগের বার্তা"));
+  var list=el("div","list");m.appendChild(list);
+  async function load(){
+    list.textContent="";
+    var rows=await api("/admin/messages");
+    if(!rows.length){list.appendChild(el("div","empty","কোনো বার্তা নেই"));return}
+    rows.forEach(function(r){
+      var c=el("div","item"),b=el("div","body");
+      b.appendChild(el("div","t",(r.is_read?"":"● ")+r.subject+" – "+r.name));
+      b.appendChild(el("div","s",r.contact+" · "+(r.created_at||"").slice(0,10)));
+      b.appendChild(el("p",null,r.body));
+      var a=el("div","acts");
+      if(!r.is_read)a.appendChild(btn("পড়া হয়েছে","ok",function(){act(async function(){await api("/admin/messages/"+r.id+"/read",{method:"PATCH"});await load()})}));
+      a.appendChild(btn("মুছুন","del",function(){if(!confirm("মুছে ফেলবেন?"))return;act(async function(){await api("/admin/messages/"+r.id,{method:"DELETE"});await load()})}));
+      c.appendChild(b);c.appendChild(a);list.appendChild(c);
+    });
+  }
+  await load();
+}
+
+/* ---------- সাধারণ CRUD: সংবাদ, কমিটি, আর্থিক, ব্যবহারকারী ---------- */
+var CRUD={
+  news:{label:"সংবাদ",path:"/admin/news",
+    fields:[{k:"title",l:"শিরোনাম",req:1},{k:"body",l:"বিবরণ",t:"textarea",req:1},{k:"published",l:"প্রকাশিত",t:"checkbox"}],
+    title:function(r){return r.title},sub:function(r){return (r.published?"প্রকাশিত":"খসড়া")+" · "+(r.created_at||"").slice(0,10)}},
+  committee:{label:"কমিটি সদস্য",path:"/admin/committee",
+    fields:[{k:"name",l:"নাম",req:1},{k:"role",l:"পদবি",req:1},{k:"group",l:"বিভাগ",t:"select",o:[["leadership","নেতৃত্ব"],["executive","কার্যনির্বাহী"],["advisor","উপদেষ্টা"]]},{k:"phone",l:"মোবাইল (ঐচ্ছিক)",opt:1},{k:"photo_url",l:"ছবির লিংক (ঐচ্ছিক)",opt:1},{k:"sort_order",l:"ক্রম (ছোট সংখ্যা আগে)",t:"number"}],
+    title:function(r){return r.name+" – "+r.role},sub:function(r){return r.group+(r.phone?" · "+r.phone:"")}},
+  finance:{label:"আয়-ব্যয়ের এন্ট্রি",path:"/admin/finance",
+    fields:[{k:"date",l:"তারিখ",t:"date",req:1},{k:"title",l:"বিবরণ",req:1},{k:"kind",l:"ধরন",t:"select",o:[["income","আয়"],["expense","ব্যয়"]]},{k:"amount",l:"টাকা",t:"number",req:1,min:1}],
+    title:function(r){return (r.kind==="income"?"+ ":"− ")+"৳ "+r.amount+" · "+r.title},sub:function(r){return r.date}},
+  users:{label:"নতুন ব্যবহারকারী",path:"/admin/users",noEdit:1,
+    fields:[{k:"email",l:"ইমেইল",t:"email",req:1},{k:"name",l:"নাম",req:1},{k:"password",l:"পাসওয়ার্ড (কমপক্ষে ১০ অক্ষর)",t:"password",req:1},{k:"role",l:"রোল",t:"select",o:[["editor","এডিটর"],["admin","অ্যাডমিন"]]}],
+    title:function(r){return r.name+" ("+r.email+")"},sub:function(r){return r.role}}
+};
+async function crudView(cfg){
+  var m=$("main"),editing=null,inputs={};
+  var form=el("form","box");form.appendChild(el("h3",null,cfg.label));
+  cfg.fields.forEach(function(f){
+    var w=el("div","fld"+(f.t==="textarea"?" full":""));w.appendChild(el("label",null,f.l));var i;
+    if(f.t==="textarea"){i=el("textarea");i.rows=5}
+    else if(f.t==="select"){i=el("select");f.o.forEach(function(o){var op=el("option",null,o[1]);op.value=o[0];i.appendChild(op)})}
+    else{i=el("input");i.type=f.t||"text"}
+    if(f.req)i.required=true;if(f.min!=null)i.min=f.min;
+    inputs[f.k]=i;w.appendChild(i);form.appendChild(w);
+  });
+  var fa=el("div","fa acts"),sub=el("button","btn pri","সংরক্ষণ");sub.type="submit";
+  var cancel=btn("সম্পাদনা বাতিল","",reset);cancel.classList.add("hide");
+  fa.appendChild(sub);fa.appendChild(cancel);form.appendChild(fa);m.appendChild(form);
+  var list=el("div","list");m.appendChild(list);
+  function getV(f){var i=inputs[f.k];if(f.t==="checkbox")return i.checked;var v=i.value.trim();if(f.t==="number")return v===""?0:parseInt(v,10);if(f.opt&&v==="")return null;return v}
+  function setV(f,val){var i=inputs[f.k];if(f.t==="checkbox")i.checked=!!val;else i.value=val==null?"":val}
+  function reset(){editing=null;cfg.fields.forEach(function(f){setV(f,f.t==="select"?f.o[0][0]:(f.t==="number"?0:""))});cancel.classList.add("hide");sub.textContent="সংরক্ষণ"}
+  form.onsubmit=function(e){e.preventDefault();
+    var body={};cfg.fields.forEach(function(f){body[f.k]=getV(f)});
+    act(async function(){
+      if(editing)await api(cfg.path+"/"+editing,{method:"PUT",json:body});else await api(cfg.path,{method:"POST",json:body});
+      toast("সংরক্ষিত হয়েছে");reset();await load();
+    });
+  };
+  async function load(){
+    list.textContent="";
+    var rows=await api(cfg.path);
+    if(!rows.length){list.appendChild(el("div","empty","কিছু নেই"));return}
+    rows.forEach(function(r){
+      var c=el("div","item"),b=el("div","body");
+      b.appendChild(el("div","t",cfg.title(r)));b.appendChild(el("div","s",cfg.sub(r)));
+      var a=el("div","acts");
+      if(!cfg.noEdit){
+        a.appendChild(btn("সম্পাদনা","",function(){editing=r.id;cfg.fields.forEach(function(f){setV(f,r[f.k])});cancel.classList.remove("hide");sub.textContent="হালনাগাদ করুন";window.scrollTo({top:0,behavior:"smooth"})}));
+        a.appendChild(btn("মুছুন","del",function(){if(!confirm("মুছে ফেলবেন?"))return;act(async function(){await api(cfg.path+"/"+r.id,{method:"DELETE"});await load()})}));
+      }
+      c.appendChild(b);c.appendChild(a);list.appendChild(c);
+    });
+  }
+  reset();await load();
+}
+</script>
+</body>
+</html>

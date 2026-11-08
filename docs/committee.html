@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>কমিটি – এম. সুমন স্মৃতি সংঘ</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#f7f8f5;--surf:#fff;--ink:#14231f;--mute:#5b6b66;--line:#e2e7e3;--brand:#0f6b5c;--brand2:#0a4a40;--accent:#d93a3a;--soft:#e6f2ee;--gold:#c8a24a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1614;--surf:#16211e;--ink:#eaf2ef;--mute:#9db0aa;--line:#26352f;--brand:#3fb8a1;--brand2:#0a4a40;--accent:#ff6b6b;--soft:#16302a}}
+:root[data-theme="dark"]{--bg:#0e1614;--surf:#16211e;--ink:#eaf2ef;--mute:#9db0aa;--line:#26352f;--brand:#3fb8a1;--brand2:#0a4a40;--accent:#ff6b6b;--soft:#16302a}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hind Siliguri",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surf);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--surf);z-index:30}
+.bar{display:flex;align-items:center;gap:16px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;white-space:nowrap}
+.logo i{width:36px;height:36px;border-radius:10px;background:var(--brand);color:#fff;display:grid;place-items:center;font-style:normal}
+nav{display:flex;gap:4px;overflow-x:auto;margin-left:auto;scrollbar-width:none}
+nav a{padding:8px 12px;border-radius:8px;color:var(--mute);font-weight:500;white-space:nowrap;font-size:15px}
+nav a:hover,nav a.on{background:var(--soft);color:var(--brand)}
+.hero{background:linear-gradient(135deg,var(--brand2),var(--brand));color:#fff;padding:52px 0 60px;text-align:center}
+h1{font-size:clamp(28px,5vw,42px);margin:0 0 6px}
+.hero p{margin:0;opacity:.92;font-size:18px}
+.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:-22px 0 0;position:relative;z-index:2}
+.tab{font:inherit;font-weight:600;padding:11px 22px;border-radius:99px;border:1px solid var(--line);background:var(--surf);color:var(--mute);cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.tab.on{background:var(--brand);border-color:var(--brand);color:#fff}
+section{padding:44px 0 0}
+h2{font-size:26px;margin:0 0 4px}.sub{color:var(--mute);margin:0 0 22px}
+.lead{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:760px;margin:0 auto}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:18px;padding:22px 16px;text-align:center;transition:transform .2s}
+.card:hover{transform:translateY(-4px)}
+.av{width:84px;height:84px;border-radius:50%;margin:0 auto 12px;background:var(--soft);color:var(--brand);display:grid;place-items:center;font-size:32px;font-weight:700;border:3px solid var(--soft)}
+.card.big{border-color:var(--gold)}.card.big .av{width:104px;height:104px;font-size:40px;border-color:var(--gold)}
+.card h3{margin:0;font-size:18px}
+.role{display:inline-block;margin:6px 0 8px;padding:3px 12px;border-radius:99px;background:var(--soft);color:var(--brand);font-size:13px;font-weight:600}
+.card.big .role{background:var(--gold);color:#3a2d08}
+.card a{display:block;color:var(--mute);font-size:14px}
+.card a:hover{color:var(--brand)}
+.hide{display:none}
+.cta{margin-top:56px;background:var(--soft);border-radius:22px;padding:32px;display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.cta h2{margin:0}
+.btn{padding:12px 22px;border-radius:10px;background:var(--brand);color:#fff;font-weight:600}
+footer{margin-top:64px;background:var(--brand2);color:#cfe3de;padding:32px 0;text-align:center}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.lead{grid-template-columns:1fr}.bar{flex-wrap:wrap;height:auto;padding:10px 0}nav{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+<header><div class="wrap bar">
+<a class="logo" href="index.html"><i>♥</i>এম. সুমন স্মৃতি সংঘ</a>
+<nav>
+<a href="index.html">হোম</a><a href="activities.html">কার্যক্রম</a><a class="on" href="committee.html">কমিটি</a><a href="activities.html">গ্যালারি</a><a href="blood-donors.html">রক্তদাতা</a><a href="memorial.html">স্মৃতিচারণ</a><a href="contact.html">যোগাযোগ</a>
+</nav></div></header>
+
+<div class="hero"><div class="wrap">
+<h1>আমাদের কমিটি</h1>
+<p>যাঁরা সংঘের প্রতিটি কাজে নেতৃত্ব দেন</p>
+</div></div>
+
+<div class="wrap"><div class="tabs" id="tabs"></div></div>
+
+<section id="s-lead"><div class="wrap">
+<h2>নেতৃত্ব</h2><p class="sub">সংঘের সভাপতি ও সাধারণ সম্পাদক</p>
+<div class="lead" id="lead"></div>
+</div></section>
+
+<section id="s-exec"><div class="wrap">
+<h2>কার্যনির্বাহী কমিটি</h2><p class="sub">দৈনন্দিন কাজের দায়িত্বে যাঁরা আছেন</p>
+<div class="grid" id="exec"></div>
+</div></section>
+
+<section id="s-adv"><div class="wrap">
+<h2>উপদেষ্টা পরিষদ</h2><p class="sub">যাঁদের পরামর্শে আমরা এগিয়ে চলি</p>
+<div class="grid" id="adv"></div>
+</div></section>
+
+<div class="wrap"><div class="cta">
+<div><h2>আমাদের সাথে যুক্ত হোন</h2><p style="margin:4px 0 0;color:var(--mute)">সংঘের সদস্য বা স্বেচ্ছাসেবক হিসেবে কাজ করতে চান?</p></div>
+<a class="btn" href="contact.html">স্বেচ্ছাসেবক ফর্ম</a>
+</div></div>
+
+<footer><div class="wrap">© ২০২৬ এম. সুমন স্মৃতি সংঘ। সর্বস্বত্ব সংরক্ষিত।</div></footer>
+
+<script>
+var lead=[["নাম লিখুন","সভাপতি","01700-000001"],["নাম লিখুন","সাধারণ সম্পাদক","01700-000002"]];
+var exec=[["নাম লিখুন","সহ-সভাপতি","01700-000003"],["নাম লিখুন","যুগ্ম সম্পাদক","01700-000004"],["নাম লিখুন","কোষাধ্যক্ষ","01700-000005"],["নাম লিখুন","সাংগঠনিক সম্পাদক","01700-000006"],["নাম লিখুন","প্রচার সম্পাদক","01700-000007"],["নাম লিখুন","সদস্য","01700-000008"],["নাম লিখুন","সদস্য","01700-000009"],["নাম লিখুন","সদস্য","01700-000010"]];
+var adv=[["নাম লিখুন","প্রধান উপদেষ্টা","01700-000011"],["নাম লিখুন","উপদেষ্টা","01700-000012"],["নাম লিখুন","উপদেষ্টা","01700-000013"],["নাম লিখুন","উপদেষ্টা","01700-000014"]];
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x)e.textContent=x;return e}
+function fill(id,arr,big){var box=document.getElementById(id);arr.forEach(function(p){
+var c=el("div","card"+(big?" big":""));
+c.appendChild(el("div","av",p[0].charAt(0)));
+c.appendChild(el("h3",null,p[0]));
+c.appendChild(el("span","role",p[1]));
+var a=el("a",null,"📞 "+p[2]);a.href="tel:"+p[2].replace(/-/g,"");c.appendChild(a);
+box.appendChild(c)})}
+fill("lead",lead,true);fill("exec",exec);fill("adv",adv);
+var T=[["সবাই","all"],["নেতৃত্ব","s-lead"],["কার্যনির্বাহী","s-exec"],["উপদেষ্টা","s-adv"]],tb=document.getElementById("tabs");
+function show(k){
+["s-lead","s-exec","s-adv"].forEach(function(i){document.getElementById(i).classList.toggle("hide",k!=="all"&&k!==i)});
+Array.prototype.forEach.call(tb.children,function(b){b.classList.toggle("on",b.dataset.k===k)})}
+T.forEach(function(t){var b=el("button","tab",t[0]);b.dataset.k=t[1];b.onclick=function(){show(t[1])};tb.appendChild(b)});
+show("all");
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>স্বেচ্ছাসেবক ও যোগাযোগ – এম. সুমন স্মৃতি সংঘ</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#f7f8f5;--surf:#fff;--ink:#14231f;--mute:#5b6b66;--line:#e2e7e3;--brand:#0f6b5c;--brand2:#0a4a40;--accent:#d93a3a;--soft:#e6f2ee;--ok:#1a8a4a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1614;--surf:#16211e;--ink:#eaf2ef;--mute:#9db0aa;--line:#26352f;--brand:#3fb8a1;--brand2:#0a4a40;--accent:#ff6b6b;--soft:#16302a;--ok:#4ade80}}
+:root[data-theme="dark"]{--bg:#0e1614;--surf:#16211e;--ink:#eaf2ef;--mute:#9db0aa;--line:#26352f;--brand:#3fb8a1;--brand2:#0a4a40;--accent:#ff6b6b;--soft:#16302a;--ok:#4ade80}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hind Siliguri",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surf);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--surf);z-index:30}
+.bar{display:flex;align-items:center;gap:16px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;white-space:nowrap}
+.logo i{width:36px;height:36px;border-radius:10px;background:var(--brand);color:#fff;display:grid;place-items:center;font-style:normal}
+nav{display:flex;gap:4px;overflow-x:auto;margin-left:auto;scrollbar-width:none}
+nav a{padding:8px 12px;border-radius:8px;color:var(--mute);font-weight:500;white-space:nowrap;font-size:15px}
+nav a:hover,nav a.on{background:var(--soft);color:var(--brand)}
+.hero{background:linear-gradient(135deg,var(--brand2),var(--brand));color:#fff;padding:52px 0 60px;text-align:center}
+h1{font-size:clamp(28px,5vw,42px);margin:0 0 6px}
+.hero p{margin:0;opacity:.92;font-size:18px}
+.tabs{display:flex;gap:8px;justify-content:center;margin-top:-22px;position:relative;z-index:2;flex-wrap:wrap}
+.tab{font:inherit;font-weight:600;padding:11px 26px;border-radius:99px;border:1px solid var(--line);background:var(--surf);color:var(--mute);cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.tab.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.pane{display:none;padding-top:36px}.pane.on{display:block}
+.two{display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:start}
+.box{background:var(--surf);border:1px solid var(--line);border-radius:18px;padding:26px}
+h2{font-size:26px;margin:0 0 4px}.sub{color:var(--mute);margin:0 0 20px}
+form{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.full{grid-column:1/-1}
+label.l{display:block;font-size:14px;font-weight:600;margin-bottom:4px}
+input,select,textarea{font:inherit;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--brand);outline-offset:1px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{display:inline-flex;gap:6px;align-items:center;padding:8px 14px;border:1px solid var(--line);border-radius:99px;cursor:pointer;font-size:14px;background:var(--bg)}
+.opt input{width:auto}
+.opt:has(input:checked){background:var(--soft);border-color:var(--brand);color:var(--brand);font-weight:600}
+button.go{font:inherit;font-weight:600;padding:13px 26px;border:0;border-radius:10px;background:var(--brand);color:#fff;cursor:pointer;justify-self:start}
+.ok{display:none;margin-top:12px;padding:12px 16px;border-radius:10px;background:var(--soft);color:var(--ok);font-weight:600}
+.why .it{display:flex;gap:12px;margin-bottom:16px}
+.why .ic{flex:none;width:42px;height:42px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:20px}
+.why b{display:block}.why span{color:var(--mute);font-size:14px}
+.ci{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.ci:last-child{border:0}
+.ci .ic{flex:none;width:44px;height:44px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:20px}
+.ci small{display:block;color:var(--mute)}
+.map{margin-top:16px;aspect-ratio:16/9;border-radius:14px;background:var(--soft);border:1px dashed var(--line);display:grid;place-items:center;color:var(--mute)}
+.note{font-size:13px;color:var(--mute);margin-top:12px}
+footer{margin-top:64px;background:var(--brand2);color:#cfe3de;padding:32px 0;text-align:center}
+@media(max-width:820px){.two{grid-template-columns:1fr}form{grid-template-columns:1fr}.bar{flex-wrap:wrap;height:auto;padding:10px 0}nav{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+<header><div class="wrap bar">
+<a class="logo" href="index.html"><i>♥</i>এম. সুমন স্মৃতি সংঘ</a>
+<nav>
+<a href="index.html">হোম</a><a href="activities.html">কার্যক্রম</a><a href="committee.html">কমিটি</a><a href="blood-donors.html">রক্তদাতা</a><a href="finance.html">আর্থিক হিসাব</a><a href="memorial.html">স্মৃতিচারণ</a><a class="on" href="contact.html">যোগাযোগ</a>
+</nav></div></header>
+
+<div class="hero"><div class="wrap">
+<h1>আমাদের সাথে যুক্ত হোন</h1>
+<p>স্বেচ্ছাসেবক হোন অথবা সরাসরি যোগাযোগ করুন</p>
+</div></div>
+
+<div class="wrap">
+<div class="tabs" id="tabs"></div>
+
+<div class="pane" id="p0"><div class="two">
+<div class="box">
+<h2>স্বেচ্ছাসেবক ফর্ম</h2><p class="sub">আপনার সময় ও দক্ষতা দিয়ে সমাজের পরিবর্তনে অংশ নিন</p>
+<form id="vf">
+<div><label class="l">পুরো নাম</label><input required maxlength="60"></div>
+<div><label class="l">মোবাইল নম্বর</label><input required maxlength="20" inputmode="tel"></div>
+<div><label class="l">ইমেইল (ঐচ্ছিক)</label><input type="email" maxlength="80"></div>
+<div><label class="l">বয়স</label><input type="number" min="16" max="80" required></div>
+<div class="full"><label class="l">এলাকা / ঠিকানা</label><input required maxlength="100"></div>
+<div class="full"><label class="l">কোন কাজে সাহায্য করতে চান?</label>
+<div class="opts"><label class="opt"><input type="checkbox">🩸 রক্তদান</label><label class="opt"><input type="checkbox">📚 শিক্ষা</label><label class="opt"><input type="checkbox">🤲 ত্রাণ</label><label class="opt"><input type="checkbox">📣 প্রচার</label><label class="opt"><input type="checkbox">💻 কারিগরি</label></div></div>
+<div class="full"><label class="l">কখন সময় দিতে পারবেন?</label>
+<select><option>সপ্তাহের শেষে</option><option>সন্ধ্যায়</option><option>যেকোনো সময়</option></select></div>
+<div class="full"><label class="l">নিজের সম্পর্কে দু’ লাইন (ঐচ্ছিক)</label><textarea rows="3" maxlength="300"></textarea></div>
+<div class="full"><button class="go" type="submit">আবেদন জমা দিন</button><div class="ok" id="vok">ধন্যবাদ! আপনার আবেদন পাওয়া গেছে। (এটি এখন শুধু ডেমো)</div></div>
+</form></div>
+<div class="box why"><h2>কেন যুক্ত হবেন?</h2><p class="sub">আপনার প্রাপ্তি</p>
+<div class="it"><div class="ic">❤️</div><div><b>মানুষের পাশে থাকার তৃপ্তি</b><span>আপনার কাজ সরাসরি মানুষের উপকারে লাগবে।</span></div></div>
+<div class="it"><div class="ic">🤝</div><div><b>নতুন বন্ধু ও নেটওয়ার্ক</b><span>সমমনা মানুষদের সাথে পরিচয়।</span></div></div>
+<div class="it"><div class="ic">🏅</div><div><b>অভিজ্ঞতা ও সনদ</b><span>নিয়মিত কাজের স্বীকৃতি।</span></div></div>
+</div></div></div>
+
+<div class="pane" id="p1"><div class="two">
+<div class="box">
+<h2>বার্তা পাঠান</h2><p class="sub">প্রশ্ন, পরামর্শ বা সাহায্যের জন্য লিখুন</p>
+<form id="cf">
+<div><label class="l">আপনার নাম</label><input required maxlength="60"></div>
+<div><label class="l">মোবাইল / ইমেইল</label><input required maxlength="80"></div>
+<div class="full"><label class="l">বিষয়</label><select><option>সাধারণ প্রশ্ন</option><option>রক্তের প্রয়োজন</option><option>সহায়তা চাই</option><option>দান করতে চাই</option><option>পরামর্শ</option></select></div>
+<div class="full"><label class="l">আপনার বার্তা</label><textarea rows="5" required maxlength="600"></textarea></div>
+<div class="full"><button class="go" type="submit">বার্তা পাঠান</button><div class="ok" id="cok">ধন্যবাদ! বার্তাটি পাওয়া গেছে। (এটি এখন শুধু ডেমো)</div></div>
+</form></div>
+<div class="box"><h2>সরাসরি যোগাযোগ</h2><p class="sub">আমাদের ঠিকানা</p>
+<div class="ci"><div class="ic">📍</div><div><small>ঠিকানা</small>আপনার ঠিকানা এখানে বসবে</div></div>
+<div class="ci"><div class="ic">📞</div><div><small>ফোন</small>+880 1XXX-XXXXXX</div></div>
+<div class="ci"><div class="ic">✉️</div><div><small>ইমেইল</small>info@example.org</div></div>
+<div class="ci"><div class="ic">🕘</div><div><small>অফিস সময়</small>শনি–বৃহস্পতি, সকাল ১০টা – সন্ধ্যা ৬টা</div></div>
+<div class="map">🗺️ মানচিত্র এখানে বসবে</div>
+</div></div>
+<p class="note">ঠিকানা, ফোন, ইমেইল সব নমুনা। আসল তথ্য পেলে বসিয়ে দেব।</p></div>
+</div>
+
+<footer><div class="wrap">© ২০২৬ এম. সুমন স্মৃতি সংঘ। সর্বস্বত্ব সংরক্ষিত।</div></footer>
+
+<script>
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x)e.textContent=x;return e}
+var T=["স্বেচ্ছাসেবক","যোগাযোগ"],tb=document.getElementById("tabs");
+function show(i){T.forEach(function(_,k){document.getElementById("p"+k).classList.toggle("on",k===i);tb.children[k].classList.toggle("on",k===i)})}
+T.forEach(function(t,i){var b=el("button","tab",t);b.onclick=function(){show(i)};tb.appendChild(b)});
+show(0);
+[["vf","vok"],["cf","cok"]].forEach(function(p){document.getElementById(p[0]).onsubmit=function(e){e.preventDefault();document.getElementById(p[1]).style.display="block";this.reset()}});
+</script>
+</body>
+</html>
