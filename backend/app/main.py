@@ -6,13 +6,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from .config import CORS_ORIGINS
-from .db import Base, engine
+from .db import Base, engine, secure_tables
 from .routers import admin, auth, public
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(engine)
+    secure_tables()
     yield
 
 

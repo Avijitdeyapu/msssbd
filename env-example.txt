@@ -1,0 +1,11 @@
+# .env নামে কপি করে বসান
+# SECRET_KEY বানাতে: python -c "import secrets;print(secrets.token_urlsafe(48))"
+SECRET_KEY=
+
+# Supabase: Connect বাটন > Session pooler এর URI বসান (পাসওয়ার্ড বদলে)
+# DATABASE_URL=postgresql://postgres.xxxxxxxx:আপনার-পাসওয়ার্ড@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres
+# শুধু পরীক্ষার জন্য (নিজের কম্পিউটারে ছোট ফাইল ডাটাবেস):
+DATABASE_URL=sqlite:///./msss.db
+
+CORS_ORIGINS=http://localhost:5173
+TOKEN_MINUTES=480

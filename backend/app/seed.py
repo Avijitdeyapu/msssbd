@@ -3,11 +3,12 @@ from getpass import getpass
 
 from sqlalchemy import select
 
-from .db import Base, SessionLocal, engine
+from .db import Base, SessionLocal, engine, secure_tables
 from .models import User
 from .security import hash_password
 
 Base.metadata.create_all(engine)
+secure_tables()
 email = input("অ্যাডমিন ইমেইল: ").strip().lower()
 name = input("নাম: ").strip()
 pw = getpass("পাসওয়ার্ড (কমপক্ষে ১০ অক্ষর): ")
